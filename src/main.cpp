@@ -2,13 +2,26 @@
 
 #include <config.h>
 #include <pinout.h>
+#include <sensors.h>
 #include <utils.h>
 
 void setup() {
   init_components();
+  calibrate_sensors();
 }
-
+int pos = 0;
 void loop() {
+
+  for (int sensor = 0; sensor < SENSORS_COUNT; sensor++) {
+    Serial.print(get_sensor_calibrated(sensor));
+    Serial.print(" ");
+  }
+  Serial.print(" => ");
+  pos = get_sensor_position(pos);
+  Serial.print(pos);
+  Serial.println();
+  delay(100);
+
   // if (!digitalRead(10)) {
 
   //   digitalWrite(20, HIGH);
@@ -39,19 +52,6 @@ void loop() {
   // Serial.print(analogRead(4));
   // Serial.println();
   // delay(100);
-  blink_led(LED_1, 150);
-  blink_led(LED_2, 75);
-  switch (get_btn_pressed_state()) {
-    case BTN_RELEASED:
-      // Serial.println("BTN_RELEASED");
-      break;
-    case BTN_PRESSED:
-      Serial.println("BTN_PRESSED");
-      break;
-    case BTN_LONG_PRESSED:
-      Serial.println("BTN_LONG_PRESSED");
-      break;
-  }
 
   // digitalWrite(20, digitalRead(10));
   // digitalWrite(21, !digitalRead(10));

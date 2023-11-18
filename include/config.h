@@ -1,6 +1,9 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#include <Arduino.h>
+#include <pinout.h>
+
 /**
  * @brief Indica el modo de funcionamiento del robot
  *
@@ -14,9 +17,6 @@
  */
 #define MS_START_TEST 3000
 #define MS_START_RACE 5000
-
-#include <Arduino.h>
-#include <pinout.h>
 
 void init_components();
 long get_ms_start();
