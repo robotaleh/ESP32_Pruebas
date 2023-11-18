@@ -7,20 +7,26 @@
 
 void setup() {
   init_components();
-  calibrate_sensors();
+  // calibrate_sensors();
 }
-int pos = 0;
+// int pos = 0;
 void loop() {
 
-  for (int sensor = 0; sensor < SENSORS_COUNT; sensor++) {
-    Serial.print(get_sensor_calibrated(sensor));
-    Serial.print(" ");
+  if (!digitalRead(BTN_1)) {
+    set_motors_speed(0, 0);
+  } else {
+    set_motors_speed(0,0);
   }
-  Serial.print(" => ");
-  pos = get_sensor_position(pos);
-  Serial.print(pos);
-  Serial.println();
-  delay(100);
+
+  // for (int sensor = 0; sensor < SENSORS_COUNT; sensor++) {
+  //   Serial.print(get_sensor_calibrated(sensor));
+  //   Serial.print(" ");
+  // }
+  // Serial.print(" => ");
+  // pos = get_sensor_position(pos);
+  // Serial.print(pos);
+  // Serial.println();
+  // delay(100);
 
   // if (!digitalRead(10)) {
 

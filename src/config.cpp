@@ -25,6 +25,7 @@ void init_components() {
   digitalWrite(MOTOR_RIGHT_B, HIGH);
   digitalWrite(MOTOR_LEFT_A, HIGH);
   digitalWrite(MOTOR_LEFT_B, HIGH);
+  init_motors();
 }
 
 /**
