@@ -17,5 +17,6 @@ void calibrate_sensors();
 int get_sensor_raw(int sensor);
 int get_sensor_calibrated(int sensor);
 int get_sensor_position(int last_position);
+long get_last_line_detected_ms();
 
 #endif // SENSORS_H

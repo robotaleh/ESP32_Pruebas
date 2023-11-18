@@ -8,6 +8,8 @@ static int sensors_max[SENSORS_COUNT] = {SENSORS_MIN, SENSORS_MIN, SENSORS_MIN, 
 static int sensors_min[SENSORS_COUNT] = {SENSORS_MAX, SENSORS_MAX, SENSORS_MAX, SENSORS_MAX, SENSORS_MAX};
 static int sensors_umb[SENSORS_COUNT] = {0, 0, 0, 0, 0};
 
+static long last_line_detected_ms = 0;
+
 /**
  * @brief Actualiza los valores de los sensores
  *
@@ -117,10 +119,15 @@ int get_sensor_position(int last_position) {
 
   int position_max = ((1000 * (SENSORS_COUNT + 1)) / 2);
   int position = 0;
-  if (count_sensors_detecting > 0) {
+  if (count_sensors_detecting > 0 && count_sensors_detecting < SENSORS_COUNT) {
     position = (sum_sensors_weight / sum_sensors) - position_max;
+    last_line_detected_ms = millis();
   } else {
     position = last_position >= 0 ? position_max : -position_max;
   }
   return map(position, -position_max, position_max, -SENSORS_POSITION_MAX, SENSORS_POSITION_MAX);
+}
+
+long get_last_line_detected_ms() {
+  return last_line_detected_ms;
 }

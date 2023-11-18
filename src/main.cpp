@@ -1,21 +1,31 @@
 #include <Arduino.h>
 
 #include <config.h>
+#include <control.h>
 #include <pinout.h>
 #include <sensors.h>
 #include <utils.h>
 
+bool race_started = false;
+
 void setup() {
   init_components();
-  // calibrate_sensors();
+  calibrate_sensors();
 }
 // int pos = 0;
 void loop() {
 
-  if (!digitalRead(BTN_1)) {
-    set_motors_speed(0, 0);
+  if (get_btn_pressed_state() == BTN_LONG_PRESSED) {
+    race_started = !race_started;
+    if (race_started) {
+      delay(get_ms_start());
+    }
+  }
+
+  if (race_started) {
+    control_loop();
   } else {
-    set_motors_speed(0,0);
+    set_motors_speed(0, 0);
   }
 
   // for (int sensor = 0; sensor < SENSORS_COUNT; sensor++) {
