@@ -2,18 +2,17 @@
 #define UTILS_H
 
 #include <Arduino.h>
+#include <pinout.h>
 
-enum LED(
-    LED_1,
-    LED_2
-)
+void set_led(int led, bool state);
+void blink_led(int led, int ms);
 
-enum BTN_STATE(
-    BTN_PRESS,
-    BTN_LONG_PRESS,
-)
+enum BTN_STATES {
+  BTN_RELEASED,
+  BTN_PRESSED,
+  BTN_LONG_PRESSED,
+};
 
-void set_led(LED led, bool state);
-
+enum BTN_STATES get_btn_pressed_state();
 
 #endif // UTILS_H

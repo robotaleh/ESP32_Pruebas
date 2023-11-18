@@ -2,7 +2,7 @@
 
 /**
  * @brief Inicializa los componentes del robot
- * 
+ *
  */
 void init_components() {
   Serial.begin(115200);
@@ -17,14 +17,14 @@ void init_components() {
   pinMode(SENSOR_4, INPUT);
   pinMode(SENSOR_5, INPUT);
 
-  pinMode(MOTOR_DER_A, OUTPUT);
-  pinMode(MOTOR_DER_B, OUTPUT);
-  pinMode(MOTOR_IZQ_A, OUTPUT);
-  pinMode(MOTOR_DER_B, OUTPUT);
-  digitalWrite(MOTOR_DER_A, HIGH);
-  digitalWrite(MOTOR_DER_B, HIGH);
-  digitalWrite(MOTOR_IZQ_A, HIGH);
-  digitalWrite(MOTOR_DER_B, HIGH);
+  pinMode(MOTOR_RIGHT_A, OUTPUT);
+  pinMode(MOTOR_RIGHT_B, OUTPUT);
+  pinMode(MOTOR_LEFT_A, OUTPUT);
+  pinMode(MOTOR_LEFT_B, OUTPUT);
+  digitalWrite(MOTOR_RIGHT_A, HIGH);
+  digitalWrite(MOTOR_RIGHT_B, HIGH);
+  digitalWrite(MOTOR_LEFT_A, HIGH);
+  digitalWrite(MOTOR_LEFT_B, HIGH);
 }
 
 /**
@@ -32,10 +32,10 @@ void init_components() {
  *
  * @return long
  */
-long get_ms_inicio() {
+long get_ms_start() {
 #ifdef MODO_RACE
-  return MS_INICIO_RACE
+  return MS_START_RACE
 #else
-  return MS_INICIO_TEST;
+  return MS_START_TEST;
 #endif
 }
