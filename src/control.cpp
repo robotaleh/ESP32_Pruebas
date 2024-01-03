@@ -6,7 +6,7 @@ static int last_error = 0;
 
 static float calc_correction(int error) {
   float p = PID_KP * error;
-  float d = PID_KD * (error - last_error) / CONTROL_LOOP_MC;
+  float d = PID_KD * (error - last_error);
   last_error = error;
   return p + d;
 }
