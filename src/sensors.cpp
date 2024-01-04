@@ -1,12 +1,11 @@
 #include <sensors.h>
 
-static int sensors_pins[SENSORS_COUNT] = {SENSOR_1, SENSOR_2, SENSOR_3, SENSOR_4, SENSOR_5};
 static int sensors_raw[SENSORS_COUNT];
 static long sensors_refresh_mc = 0;
 
-static int sensors_max[SENSORS_COUNT] = {SENSORS_MIN, SENSORS_MIN, SENSORS_MIN, SENSORS_MIN, SENSORS_MIN};
-static int sensors_min[SENSORS_COUNT] = {SENSORS_MAX, SENSORS_MAX, SENSORS_MAX, SENSORS_MAX, SENSORS_MAX};
-static int sensors_umb[SENSORS_COUNT] = {0, 0, 0, 0, 0};
+static int sensors_max[SENSORS_COUNT] = {SENSORS_MIN, SENSORS_MIN, SENSORS_MIN, SENSORS_MIN, SENSORS_MIN, SENSORS_MIN, SENSORS_MIN, SENSORS_MIN, SENSORS_MIN, SENSORS_MIN, SENSORS_MIN, SENSORS_MIN, SENSORS_MIN, SENSORS_MIN, SENSORS_MIN, SENSORS_MIN};
+static int sensors_min[SENSORS_COUNT] = {SENSORS_MAX, SENSORS_MAX, SENSORS_MAX, SENSORS_MAX, SENSORS_MAX, SENSORS_MAX, SENSORS_MAX, SENSORS_MAX, SENSORS_MAX, SENSORS_MAX, SENSORS_MAX, SENSORS_MAX, SENSORS_MAX, SENSORS_MAX, SENSORS_MAX, SENSORS_MAX};
+static int sensors_umb[SENSORS_COUNT] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 static long last_line_detected_ms = 0;
 
@@ -16,9 +15,32 @@ static long last_line_detected_ms = 0;
  */
 static void refresh_sensors() {
   if (micros() - sensors_refresh_mc >= 1000 || micros() < sensors_refresh_mc) {
-    for (int sensor = 0; sensor < SENSORS_COUNT; sensor++) {
-      sensors_raw[sensor] = analogRead(sensors_pins[sensor]);
-    }
+
+    sensors_raw[7] = 4095 - analogRead(SENSOR_1);
+    sensors_raw[8] = 4095 - analogRead(SENSOR_2);
+    digitalWrite(MUX_A, HIGH); // 0 0 1
+    sensors_raw[6] = 4095 - analogRead(SENSOR_1);
+    sensors_raw[9] = 4095 - analogRead(SENSOR_2);
+    digitalWrite(MUX_B, HIGH); // 0 1 1
+    sensors_raw[4] = 4095 - analogRead(SENSOR_1);
+    sensors_raw[11] = 4095 - analogRead(SENSOR_2);
+    digitalWrite(MUX_A, LOW); // 0 1 0
+    sensors_raw[5] = 4095 - analogRead(SENSOR_1);
+    sensors_raw[10] = 4095 - analogRead(SENSOR_2);
+    digitalWrite(MUX_C, HIGH); // 1 1 0
+    sensors_raw[1] = 4095 - analogRead(SENSOR_1);
+    sensors_raw[14] = 4095 - analogRead(SENSOR_2);
+    digitalWrite(MUX_A, HIGH); // 1 1 1
+    sensors_raw[0] = 4095 - analogRead(SENSOR_1);
+    sensors_raw[15] = 4095 - analogRead(SENSOR_2);
+    digitalWrite(MUX_B, LOW); // 1 0 1
+    sensors_raw[2] = 4095 - analogRead(SENSOR_1);
+    sensors_raw[13] = 4095 - analogRead(SENSOR_2);
+    digitalWrite(MUX_A, LOW); // 1 0 0
+    sensors_raw[3] = 4095 - analogRead(SENSOR_1);
+    sensors_raw[12] = 4095 - analogRead(SENSOR_2);
+    digitalWrite(MUX_C, LOW); // 0 0 0
+
     sensors_refresh_mc = micros();
   }
 }
@@ -30,10 +52,8 @@ static void print_calibrations() {
     Serial.print(" ");
     Serial.print(sensors_max[sensor]);
     Serial.print(" ");
-    Serial.print(sensors_umb[sensor]);
-    Serial.print(" ");
+    Serial.println(sensors_umb[sensor]);
   }
-  Serial.println();
 }
 
 /**

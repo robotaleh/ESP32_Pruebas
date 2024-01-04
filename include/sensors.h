@@ -5,7 +5,7 @@
 #include <pinout.h>
 #include <utils.h>
 
-#define SENSORS_COUNT 5
+#define SENSORS_COUNT 16
 
 #define CALIBRATION_MS 3000
 #define SENSORS_MAX 4095

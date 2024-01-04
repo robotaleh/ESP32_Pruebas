@@ -11,11 +11,11 @@ void init_components() {
   pinMode(LED_2, OUTPUT);
   pinMode(BTN_1, INPUT_PULLUP);
 
-  pinMode(SENSOR_1, INPUT);
-  pinMode(SENSOR_2, INPUT);
-  pinMode(SENSOR_3, INPUT);
-  pinMode(SENSOR_4, INPUT);
-  pinMode(SENSOR_5, INPUT);
+  pinMode(SENSOR_1, OUTPUT);
+  pinMode(SENSOR_2, OUTPUT);
+  pinMode(MUX_C, OUTPUT);
+  pinMode(MUX_B, OUTPUT);
+  pinMode(MUX_A, OUTPUT);
 
   pinMode(MOTOR_RIGHT_A, OUTPUT);
   pinMode(MOTOR_RIGHT_B, OUTPUT);

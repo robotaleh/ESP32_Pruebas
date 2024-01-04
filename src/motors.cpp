@@ -52,11 +52,11 @@ void set_motors_speed(float velI, float velD) {
   }
 
   if (velD > 0) {
-    ledcWrite(PWM_MOTOR_RIGHT_A, PWM_MOTORS_MAX - (PWM_MOTORS_MAX * velD / 100));
-    ledcWrite(PWM_MOTOR_RIGHT_B, PWM_MOTORS_MAX);
-  } else {
     ledcWrite(PWM_MOTOR_RIGHT_A, PWM_MOTORS_MAX);
-    ledcWrite(PWM_MOTOR_RIGHT_B, PWM_MOTORS_MAX - (PWM_MOTORS_MAX * abs(velD) / 100));
+    ledcWrite(PWM_MOTOR_RIGHT_B, PWM_MOTORS_MAX - (PWM_MOTORS_MAX * velD / 100));
+  } else {
+    ledcWrite(PWM_MOTOR_RIGHT_A, PWM_MOTORS_MAX - (PWM_MOTORS_MAX * abs(velD) / 100));
+    ledcWrite(PWM_MOTOR_RIGHT_B, PWM_MOTORS_MAX);
   }
 }
 

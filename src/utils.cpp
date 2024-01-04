@@ -56,7 +56,7 @@ enum BTN_STATES get_btn_pressed_state() {
   if (millis() - btn_last_pressed_ms < 50) {
     return BTN_RELEASED;
   }
-  if (!digitalRead(BTN_1)) {
+  if (digitalRead(BTN_1)) {
     // Serial.println("BTN_1 OK");
     if (btn_pressed_ms == 0) {
       btn_pressed_ms = millis();

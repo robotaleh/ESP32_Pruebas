@@ -18,6 +18,12 @@ void control_loop() {
     if (millis() - get_last_line_detected_ms() > 250) {
       set_motors_speed(0, 0);
     } else {
+      // if (correction >= 0) {
+      //   set_motors_speed(BASE_SPEED, BASE_SPEED - correction);
+      // } else {
+      //   set_motors_speed(BASE_SPEED + correction, BASE_SPEED);
+      // }
+
       set_motors_speed(BASE_SPEED + correction, BASE_SPEED - correction);
     }
 

@@ -7,24 +7,27 @@
 #include <utils.h>
 
 bool race_started = false;
+long race_started_ms = 0;
 
 void setup() {
   init_components();
   calibrate_sensors();
 }
-// int pos = 0;
+int pos = 0;
 void loop() {
-
+  // set_motors_speed(100,100);
   if (get_btn_pressed_state() == BTN_LONG_PRESSED) {
     race_started = !race_started;
     if (race_started) {
       delay(get_ms_start());
+      race_started_ms = millis();
     }
   }
 
-  if (race_started) {
+  if (race_started && (millis() - race_started_ms) < 5000) {
     control_loop();
   } else {
+    race_started = false;
     set_motors_speed(0, 0);
   }
 
