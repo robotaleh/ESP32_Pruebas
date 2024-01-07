@@ -13,65 +13,48 @@ void setup() {
   init_components();
   calibrate_sensors();
 }
-int pos = 0;
+
 void loop() {
-  // set_motors_speed(100,100);
-  if (get_btn_pressed_state() == BTN_LONG_PRESSED) {
+  BTN_STATES btn_state = get_btn_pressed_state();
+  while (btn_state == BTN_PRESSING) {
+    blink_led(LED_1, 75);
+    set_led(LED_2, false);
+    btn_state = get_btn_pressed_state();
+  }
+  if (btn_state == BTN_LONG_PRESSED) {
     race_started = !race_started;
     if (race_started) {
-      delay(get_ms_start());
+      long starting_ms = millis();
+      set_led(LED_1, true);
+      set_led(LED_2, true);
+      while (millis() - starting_ms < get_ms_start()) {
+        if ((starting_ms + get_ms_start()) - millis() <= 1000) {
+          set_led(LED_1, false);
+          set_led(LED_2, true);
+          // set_fan_speed(BASE_FAN_SPEED);
+        } else {
+          blink_led(LED_1, 500);
+          blink_led(LED_2, 500);
+        }
+      }
+      set_led(LED_1, false);
+      set_led(LED_2, false);
       race_started_ms = millis();
     }
   }
 
   if (race_started && (millis() - race_started_ms) < 5000) {
-    control_loop();
+    control_loop(millis() - race_started_ms);
+    // if(millis() - race_started_ms < 1000){
+    //   set_fan_speed(30);
+    // }else{
+    //   set_fan_speed(50);
+    // }
   } else {
     race_started = false;
+    set_fan_speed(0);
     set_motors_speed(0, 0);
+    set_led(LED_1, true);
+    set_led(LED_2, false);
   }
-
-  // for (int sensor = 0; sensor < SENSORS_COUNT; sensor++) {
-  //   Serial.print(get_sensor_calibrated(sensor));
-  //   Serial.print(" ");
-  // }
-  // Serial.print(" => ");
-  // pos = get_sensor_position(pos);
-  // Serial.print(pos);
-  // Serial.println();
-  // delay(100);
-
-  // if (!digitalRead(10)) {
-
-  //   digitalWrite(20, HIGH);
-  //   // digitalWrite(7, HIGH);
-
-  //   digitalWrite(6, HIGH);
-  //   digitalWrite(21, LOW);
-  //   // digitalWrite(8, !digitalRead(10));
-  //   // digitalWrite(9, digitalRead(10));
-  // } else {
-  //   digitalWrite(20, LOW);
-  //   digitalWrite(7, LOW);
-
-  //   digitalWrite(6, HIGH);
-  //   digitalWrite(21, HIGH);
-  //   digitalWrite(8, HIGH);
-  //   digitalWrite(9, HIGH);
-  // }
-
-  // Serial.print(analogRead(0));
-  // Serial.print(" ");
-  // Serial.print(analogRead(1));
-  // Serial.print(" ");
-  // Serial.print(analogRead(2));
-  // Serial.print(" ");
-  // Serial.print(analogRead(3));
-  // Serial.print(" ");
-  // Serial.print(analogRead(4));
-  // Serial.println();
-  // delay(100);
-
-  // digitalWrite(20, digitalRead(10));
-  // digitalWrite(21, !digitalRead(10));
 }

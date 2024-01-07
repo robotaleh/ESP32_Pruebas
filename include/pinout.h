@@ -4,8 +4,8 @@
  * @brief Pines de los LEDs
  *
  */
-#define LED_1 20
-#define LED_2 21
+#define LED_1 21
+#define LED_2 20
 
 /**
  * @brief Pines de Botones
@@ -31,6 +31,6 @@
 #define MOTOR_RIGHT_B 8
 #define MOTOR_LEFT_A 7
 #define MOTOR_LEFT_B 10
-// #define MOTOR_STDBY 5 //Pin de succión en versión PRO
+#define MOTOR_SUCTION 5
 
 #endif // PINOUT_H

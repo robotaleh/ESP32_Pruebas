@@ -16,7 +16,7 @@
  * @brief Tiempo de espera para iniciar carrera después de pulsar el botón
  *
  */
-#define MS_START_TEST 3000
+#define MS_START_TEST 10000
 #define MS_START_RACE 5000
 
 

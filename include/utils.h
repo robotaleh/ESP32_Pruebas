@@ -9,6 +9,7 @@ void blink_led(int led, int ms);
 
 enum BTN_STATES {
   BTN_RELEASED,
+  BTN_PRESSING,
   BTN_PRESSED,
   BTN_LONG_PRESSED,
 };

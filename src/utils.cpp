@@ -17,9 +17,11 @@ void set_led(int led, bool state) {
   switch (led) {
     case LED_1:
       toggle_led_state[0] = state;
+      blink_led_ms[0] = millis();
       break;
     case LED_2:
       toggle_led_state[1] = state;
+      blink_led_ms[1] = millis();
       break;
   }
 }
@@ -35,13 +37,11 @@ void blink_led(int led, int ms) {
     case LED_1:
       if (millis() - blink_led_ms[0] >= ms) {
         set_led(led, !toggle_led_state[0]);
-        blink_led_ms[0] = millis();
       }
       break;
     case LED_2:
       if (millis() - blink_led_ms[1] >= ms) {
         set_led(led, !toggle_led_state[1]);
-        blink_led_ms[1] = millis();
       }
       break;
   }
@@ -57,21 +57,18 @@ enum BTN_STATES get_btn_pressed_state() {
     return BTN_RELEASED;
   }
   if (digitalRead(BTN_1)) {
-    // Serial.println("BTN_1 OK");
+    // Serial.print("RELEASE ");
+    // Serial.println(btn_pressed_ms);
     if (btn_pressed_ms == 0) {
-      btn_pressed_ms = millis();
-    }
-    return BTN_RELEASED;
-  } else {
-    // Serial.println("BTN_1 KO");
-    if (btn_pressed_ms > 0) {
+      return BTN_RELEASED;
+    } else {
       if (millis() - btn_pressed_ms >= 250) {
         btn_pressed_ms = 0;
         btn_last_pressed_ms = millis();
         return BTN_LONG_PRESSED;
       } else if (millis() - btn_pressed_ms <= 250) {
         btn_pressed_ms = 0;
-        if (millis() - btn_pressed_ms < 100) {
+        if (millis() - btn_pressed_ms < 25) {
           return BTN_RELEASED;
         } else {
           btn_last_pressed_ms = millis();
@@ -80,8 +77,12 @@ enum BTN_STATES get_btn_pressed_state() {
       } else {
         return BTN_RELEASED;
       }
-    } else {
-      return BTN_RELEASED;
     }
+  } else {
+    // Serial.println("PRESSING");
+    if (btn_pressed_ms == 0) {
+      btn_pressed_ms = millis();
+    }
+    return BTN_PRESSING;
   }
 }

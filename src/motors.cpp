@@ -10,25 +10,30 @@ void init_motors() {
   ledcSetup(PWM_MOTOR_RIGHT_B, PWM_MOTORS_HZ, PWM_MOTORS_RESOLUTION);
   ledcSetup(PWM_MOTOR_LEFT_A, PWM_MOTORS_HZ, PWM_MOTORS_RESOLUTION);
   ledcSetup(PWM_MOTOR_LEFT_B, PWM_MOTORS_HZ, PWM_MOTORS_RESOLUTION);
+  ledcSetup(PWM_SUCTION, PWM_SUCTION_HZ, PWM_SUCTION_RESOLUTION);
 
   // Asignación de los pines a los canales PWM
   ledcAttachPin(MOTOR_RIGHT_A, PWM_MOTOR_RIGHT_A);
   ledcAttachPin(MOTOR_RIGHT_B, PWM_MOTOR_RIGHT_B);
   ledcAttachPin(MOTOR_LEFT_A, PWM_MOTOR_LEFT_A);
   ledcAttachPin(MOTOR_LEFT_B, PWM_MOTOR_LEFT_B);
+  ledcAttachPin(MOTOR_SUCTION, PWM_SUCTION);
 
   // Establece el valor inicial de los canales PWM
   ledcWrite(PWM_MOTOR_RIGHT_A, PWM_MOTORS_MAX);
   ledcWrite(PWM_MOTOR_RIGHT_B, PWM_MOTORS_MAX);
   ledcWrite(PWM_MOTOR_LEFT_A, PWM_MOTORS_MAX);
   ledcWrite(PWM_MOTOR_LEFT_B, PWM_MOTORS_MAX);
+  ledcWrite(PWM_SUCTION, PWM_SUCTION_MIN);
+
+  // delay(5000);
 }
 
 /**
  * @brief Establece la velocidad de los motores
  *
- * @param velI Velocidad del motor izquierdo
- * @param velD Velocidad del motor derecho
+ * @param velI Velocidad del motor izquierdo 0-100%
+ * @param velD Velocidad del motor derecho 0-100%
  */
 void set_motors_speed(float velI, float velD) {
   if (velI > 100) {
@@ -60,35 +65,15 @@ void set_motors_speed(float velI, float velD) {
   }
 }
 
-/*
-void set_speed(int velI, int velD) {
-  if (velD > 100) {
-    velD = 100;
-  } else if (velD < -100) {
-    velD = -100;
-  }
-  if (velI > 100) {
-    velI = 100;
-  } else if (velI < -100) {
-    velI = -100;
-  }
-
-  if (velI >= 0) {
-    analogWrite(MOTOR_DER_A, MAX_PWM - MAX_PWM * velI / 100);
-    analogWrite(MOTOR_DER_B, MAX_PWM);
+/**
+ * @brief Establece la velocidad del ventilador
+ *
+ * @param vel Velocidad del ventilador 0-100%
+ */
+void set_fan_speed(int vel) {
+  if (vel != 0) {
+    ledcWrite(PWM_SUCTION, map(vel, 0, 100, PWM_SUCTION_MIN, PWM_SUCTION_MAX));
   } else {
-    analogWrite(MOTOR_DER_A, MAX_PWM);
-    analogWrite(MOTOR_DER_B, MAX_PWM - MAX_PWM * abs(velI) / 100);
-  }
-
-  if (velD >= 0) {
-    analogWrite(MOTOR_IZQ_A, MAX_PWM - MAX_PWM * velD / 100);
-    analogWrite(MOTOR_IZQ_B, MAX_PWM);
-  } else {
-    analogWrite(MOTOR_IZQ_A, MAX_PWM);
-    analogWrite(MOTOR_IZQ_B, MAX_PWM - MAX_PWM * abs(velD) / 100);
+    ledcWrite(PWM_SUCTION, PWM_SUCTION_MIN);
   }
 }
-
-
-*/

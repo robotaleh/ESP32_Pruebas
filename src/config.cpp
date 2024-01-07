@@ -25,6 +25,9 @@ void init_components() {
   digitalWrite(MOTOR_RIGHT_B, HIGH);
   digitalWrite(MOTOR_LEFT_A, HIGH);
   digitalWrite(MOTOR_LEFT_B, HIGH);
+
+  pinMode(MOTOR_SUCTION, OUTPUT);
+
   init_motors();
 }
 
