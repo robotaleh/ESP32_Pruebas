@@ -31,20 +31,26 @@ void loop() {
         if ((starting_ms + get_ms_start()) - millis() <= 1000) {
           set_led(LED_1, false);
           set_led(LED_2, true);
-          // set_fan_speed(BASE_FAN_SPEED);
+          if (BASE_FAN_SPEED > 0) {
+            set_fan_speed(BASE_FAN_SPEED * 0.25);
+          }
         } else {
           blink_led(LED_1, 500);
           blink_led(LED_2, 500);
         }
       }
-      set_led(LED_1, false);
+      set_led(LED_1, true);
       set_led(LED_2, false);
       race_started_ms = millis();
     }
   }
 
-  if (race_started && (millis() - race_started_ms) < 5000) {
+  if (race_started && (millis() - race_started_ms) < 10000) {
+    blink_led(LED_1, 500);
+    blink_led(LED_2, 500);
     control_loop(millis() - race_started_ms);
+    // set_fan_speed(100);
+    // set_motors_speed(20, 20);
     // if(millis() - race_started_ms < 1000){
     //   set_fan_speed(30);
     // }else{

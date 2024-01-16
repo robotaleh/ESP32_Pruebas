@@ -64,6 +64,7 @@ void calibrate_sensors() {
   set_led(LED_1, true);
   set_led(LED_2, false);
   while (get_btn_pressed_state() != BTN_LONG_PRESSED) {
+    blink_led(LED_1, 350);
     blink_led(LED_2, 350);
   }
   set_led(LED_1, true);

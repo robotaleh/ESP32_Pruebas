@@ -16,8 +16,8 @@
 #define PWM_SUCTION 4
 #define PWM_SUCTION_HZ 50
 #define PWM_SUCTION_RESOLUTION 11
-#define PWM_SUCTION_MAX 204
-#define PWM_SUCTION_MIN 102
+#define PWM_SUCTION_MAX 102
+#define PWM_SUCTION_MIN 153
 
 void init_motors();
 void set_motors_speed(float velI, float velD);
